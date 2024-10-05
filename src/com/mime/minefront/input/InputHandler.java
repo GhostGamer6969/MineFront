@@ -11,6 +11,8 @@ import java.awt.event.MouseMotionListener;
 public class InputHandler implements KeyListener, FocusListener, MouseMotionListener, MouseListener {
 
 	public boolean[] key = new boolean[68836];
+	public static int MouseX;
+	public static int MouseY;
 
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -43,8 +45,9 @@ public class InputHandler implements KeyListener, FocusListener, MouseMotionList
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		MouseX= e.getX();
+		MouseY= e.getY();
+		
 	}
 
 	public void focusGained(FocusEvent e) {

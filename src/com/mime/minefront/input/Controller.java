@@ -2,8 +2,10 @@ package com.mime.minefront.input;
 
 public class Controller {
 	public double x, z, rotation, xa, za, rotationa;
+	public static boolean turnLeft = false;
+	public static boolean turnRight = false;
 
-	public void tick(boolean forward, boolean back, boolean left, boolean right, boolean turnRight, boolean turnLeft) {
+	public void tick(boolean forward, boolean back, boolean left, boolean right) {
 		double rotationSpeed = 0.025;
 		double walkSpeed = 1;
 		double xMove = 0;

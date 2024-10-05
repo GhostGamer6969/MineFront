@@ -1,8 +1,11 @@
 package com.mime.minefront;
 
 import java.awt.Canvas;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -10,7 +13,9 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.mime.minefront.graphics.Render;
+import com.mime.minefront.graphics.Render3D;
 import com.mime.minefront.graphics.Screen;
+import com.mime.minefront.input.Controller;
 import com.mime.minefront.input.InputHandler;
 
 public class Display extends Canvas implements Runnable {
@@ -29,6 +34,8 @@ public class Display extends Canvas implements Runnable {
 	private boolean running = false;
 	private int[] pixels;
 	private InputHandler input;
+	private int newX=0;
+	private int oldX=0;
 
 	public Display() {
 		Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -100,6 +107,26 @@ public class Display extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
+			
+			newX=InputHandler.MouseX;
+			
+			if(newX > oldX) {
+				System.out.println("right");
+				Controller.turnLeft=false;
+				Controller.turnRight = true;
+				
+			}
+			if(newX < oldX) {
+				System.out.println("left");
+				Controller.turnRight = false;
+				Controller.turnLeft=true;
+			}
+			if(newX==oldX) {
+				Controller.turnLeft=false;
+				Controller.turnRight=false;
+			}
+			oldX=newX;
+			
 		}
 
 	}
@@ -128,11 +155,14 @@ public class Display extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
+		BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+		Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor,new Point(0,0),"blank");
 		Display game = new Display();
 		JFrame frame = new JFrame();
 		frame.add(game);
 		frame.setTitle(TITLE);
 		frame.pack();
+		frame.getContentPane().setCursor(blank);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
