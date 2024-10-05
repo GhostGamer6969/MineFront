@@ -31,7 +31,7 @@ public class Screen extends Render {
 //			draw(test,(width - 256)/2 + anim, (height - 256)/2 +anim2);
 		}
 		
-		render.floor();
+		render.floor(game);
 		draw(render,0,0);
 	}
 }
